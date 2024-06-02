@@ -1,0 +1,10 @@
+<div class="p-4 relative <%= className %>" data-controller="alert">
+  <p class="font-bold alert-title"><%= title %></p>
+  <% if description %>
+    <p class="text-slate-700 alert-description"><%= description %></p>
+  <%end%>
+  <button>
+    <span class="sr-only">Close</span>
+    <%= inline_svg_tag "icons/close.svg", class: "w-5 h-5" %>
+  </button>
+</div>
