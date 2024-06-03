@@ -1,0 +1,28 @@
+<div class="">
+  <div class="">
+    <%= form_with url: "/flights", method: :get do |form| %>
+      <%= form.select(:departure_code, @airport_options, selected: @flight_details[:departure_code]) %>
+      <%= form.select(:arrival_code, @airport_options, selected: @flight_details[:arrival_code]) %>
+      <%= form.select(:date, @unique_departure_dates, selected: @flight_details[:date]) %>
+      <%= form.select(:num_tickets, [1,2,3,4], prompt: "Passengers", selected: @flight_details[:num_tickets] )%>
+      <%= form.submit "Search", name: nil %>
+    <% end %>
+  </div>
+</div>
+<% if defined?(@flights) %>
+  <div class="">
+    <h1 class="text-xl">Flight Search</h1>
+    <% if @flights.empty? %>
+      <p class="text-center">No flights found.</p>
+    <% else %>
+      <%= form_with url: "/" do |form| %>
+        <div class="grid grid-cols-1">
+          <% @flights.each do |flight| %>
+            <%= form.radio_button :flight, "#{flight.id}", {required: 'required'} %>
+            <%= form.label :flight, "Flight: #{flight.id}"%>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
