@@ -19,7 +19,7 @@
           <%= inline_svg_tag "icons/calendar-today.svg", class: "select-svg" %>
           <%= form.select(:num_tickets, [1,2,3,4], {selected: @flight_details[:num_tickets], include_blank: "Passengers"}, {class: "form-select"})%>
         </div>
-        <%= form.submit "Search", name: nil, class: "w-full bg-blue-800 rounded p-2 text-sm font-medium text-blue-50" %>
+        <%= form.submit "Search", name: nil, class: "w-full bg-blue-800 rounded p-2 text-sm font-medium text-blue-50 shadow" %>
       </div>
     <% end %>
   </div>
@@ -27,14 +27,15 @@
 <% if defined?(@flights) %>
   <div class="mt-10 flex justify-center">
     <div class="w-full max-w-4xl">
-      <h2 class="text-lg font-bold text-slate-900">Departure flights</h2>
-      <p class="text-sm mb-4 font-semibold text-slate-700"><%= @date.strftime("%a, %d %B %Y")%></p>
+      <h2 class="text-lg font-bold text-slate-900 text-center">Departure flights</h2>
+      <p class="text-sm mb-4 font-semibold text-slate-700 text-center"><%= @date.strftime("%a, %d %B %Y")%></p>
       <% if @flights.empty? %>
         <p class="text-center">No flights found.</p>
       <% else %>
-        <%= form_with url: "/" do |form| %>
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3"  data-controller="flight-card" >
+        <%= form_with url: new_booking_path, class: "flex flex-col items-center" do |form| %>
+          <div class="w-full grid  grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 mb-4"  data-controller="flight-card" >
             <% @flights.each do |flight| %>
+              <%= form.hidden_field :num_tickets, @flight_details[:num_tickets] %>
               <label class="flight-card  bg-white hover:bg-blue-50 p-4 transition-all ease-in-out shadow-md rounded-md" data-flight-card-target="card" >
                 <%= form.radio_button :flight, flight.id, { required: 'required', class: 'hidden',  "data-flight-card-target": "radio" }  %>
                 <div class="flight-card-content  cursor-pointer" >
@@ -62,6 +63,7 @@
               </label>
             <% end %>
           </div>
+          <%= form.submit "Book", class: "bg-blue-800 w-full max-w-xs rounded p-2 text-sm font-medium text-blue-50 shadow" %>
         <% end %>
       <% end %>
     </div>
