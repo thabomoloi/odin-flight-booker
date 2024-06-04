@@ -1,6 +1,6 @@
 <div class="flex justify-center -mt-48">
   <div class="bg-white w-full max-w-lg p-6 shadow-md rounded-md">
-    <h1 class="mb-4 text-xl font-bold text-slate-900 text-center">Flight Search</h1>
+    <h1 class="mb-4 text-2xl font-bold text-slate-900 text-center">Flight Search</h1>
     <%= form_with url: "/flights", method: :get do |form| %>
       <div class="flex flex-col gap-4 text-slate-700">
         <div class="relative">
@@ -25,16 +25,40 @@
   </div>
 </div>
 <% if defined?(@flights) %>
-  <div class="">
-    <h1 class="text-xl">Search Results</h1>
+  <div class="mt-10">
+    <h2 class="text-lg font-bold text-slate-900">Departure flights</h2>
+    <p class="text-sm mb-4 font-semibold text-slate-700"><%= @date.strftime("%a, %d %B %Y")%></p>
     <% if @flights.empty? %>
       <p class="text-center">No flights found.</p>
     <% else %>
       <%= form_with url: "/" do |form| %>
-        <div class="grid grid-cols-1">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <% @flights.each do |flight| %>
-            <%= form.radio_button :flight, "#{flight.id}", {required: 'required'} %>
-            <%= form.label :flight, "Flight: #{flight.id}"%>
+            <label class="flight-card  bg-white hover:bg-blue-50 p-4 transition-all ease-in-out shadow rounded">
+              <%= form.radio_button :flight, flight.id, { required: 'required', class: 'hidden' } %>
+              <div class="flight-card-content">
+                <div class="text-sm">
+                  <div class="flex justify-between gap-4">
+                    <div class="text-slate-800 flex gap-2 font-bold items-center">
+                      <%= inline_svg_tag "icons/airplane-takeoff.svg", class: "w-5 h-5 fill-current"%>
+                      <span><%= flight.departure_airport.code %></span>
+                    </div>
+                    <div class="text-slate-800 flex gap-2 font-bold items-center">
+                      <%= inline_svg_tag "icons/airplane-landing.svg", class: "w-5 h-5 fill-current"%>
+                      <span><%= flight.arrival_airport.code %></span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between gap-4 mt-4">
+                    <div class="text-slate-700 flex gap-2 font-bold items-center">
+                      <span><%= flight.departure_time.strftime("%I:%M %p") %></span>
+                    </div>
+                    <div class="text-slate-700 flex gap-2 font-bold items-center">
+                      <span><%= format_duration flight.duration %></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </label>
           <% end %>
         </div>
       <% end %>
