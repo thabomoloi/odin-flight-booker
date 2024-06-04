@@ -9,7 +9,8 @@ class FlightsController < ApplicationController
     if required_params.all? { |param| params[param].present? }
       @date = Date.parse(params[:date]) rescue nil
       @flight_details = params.slice(:departure_code, :arrival_code, :date, :num_tickets)
-      @flights = Flight.where("DATE(departure_time) = ?", @date)
+
+      @flights = Flight.by_airport_codes_and_date(params[:departure_code], params[:arrival_code], @date)
     end
   end
 end
