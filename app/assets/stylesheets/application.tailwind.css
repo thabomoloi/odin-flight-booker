@@ -11,3 +11,12 @@
 }
 
 */
+
+@layer base {
+  select.form-select {
+    @apply w-full pl-10 bg-slate-100  border-none text-sm text-slate-700 rounded-md font-medium;
+  }
+  svg.select-svg {
+    @apply w-6 h-6 absolute left-2 top-1/2 translate-y-[-50%] fill-current;
+  }
+}
