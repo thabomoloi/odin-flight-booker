@@ -2,12 +2,6 @@
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
 
 cpt = Airport.find_or_create_by!(code: "CPT")
 jnb = Airport.find_or_create_by!(code: "JNB")
@@ -15,44 +9,53 @@ bfn = Airport.find_or_create_by!(code: "BFN")
 hla = Airport.find_or_create_by!(code: "HLA")
 dur = Airport.find_or_create_by!(code: "DUR")
 
-Flight.create!(
-  departure_airport: cpt,
-  arrival_airport: jnb,
-  departure_time: "2024-06-10 08:00:00",
-  duration: 120
-)
+def generate_flight_days(start_date, days)
+  (0...days).map { |day| start_date + day.days }
+end
 
-Flight.create!(
-  departure_airport: jnb,
-  arrival_airport: cpt,
-  departure_time: "2024-06-10 10:00:00",
-  duration: 120
-)
+def generate_flight_times(start_date, days, min_flights_per_day, max_flights_per_day)
+  flight_days = generate_flight_days(start_date, days)
+  flight_times = []
 
-Flight.create!(
-  departure_airport: jnb,
-  arrival_airport: dur,
-  departure_time: "2024-06-10 09:00:00",
-  duration: 90
-)
+  flight_days.each do |date|
+    flights_per_day = rand(min_flights_per_day..max_flights_per_day)
+    flights_per_day.times do |i|
+      departure_time = date.change(hour: 6) + (i * 4).hours
+      flight_times << departure_time
+    end
+  end
+  flight_times
+end
 
-Flight.create!(
-  departure_airport: bfn,
-  arrival_airport: hla,
-  departure_time: "2024-06-10 10:00:00",
-  duration: 60
-)
+# Define the routes and their flight durations
+routes = {
+  [ cpt, jnb ] => 120,
+  [ jnb, cpt ] => 120,
+  [ jnb, dur ] => 90,
+  [ dur, jnb ] => 90,
+  [ bfn, hla ] => 95,
+  [ hla, bfn ] => 95,
+  [ hla, cpt ] => 150,
+  [ cpt, hla ] => 150,
+  [ dur, bfn ] => 105,
+  [ bfn, dur ] => 105
+}
 
-Flight.create!(
-  departure_airport: hla,
-  arrival_airport: cpt,
-  departure_time: "2024-06-10 11:00:00",
-  duration: 150
-)
+# Generate and create flights for each route
+routes.each do |(departure_airport, arrival_airport), duration|
+  start_date = DateTime.new(2024, 6, 10)
+  days = 6
+  min_flights_per_day = 0
+  max_flights_per_day = 4
 
-Flight.create!(
-  departure_airport: dur,
-  arrival_airport: bfn,
-  departure_time: "2024-06-10 12:00:00",
-  duration: 80
-)
+  flight_times = generate_flight_times(start_date, days, min_flights_per_day, max_flights_per_day)
+
+  flight_times.each do |time|
+    Flight.create!(
+      departure_airport: departure_airport,
+      arrival_airport: arrival_airport,
+      departure_time: time,
+      duration: duration
+    )
+  end
+end
