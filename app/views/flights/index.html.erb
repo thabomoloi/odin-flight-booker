@@ -36,7 +36,7 @@
           <%= form.hidden_field :num_tickets, value: @flight_details[:num_tickets] %>
           <div class="w-full grid  grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 mb-4"  data-controller="flight-card" >
             <% @flights.each do |flight| %>
-              <label class="flight-card  bg-white hover:bg-blue-50 p-4 transition-all ease-in-out shadow-md rounded-md" data-flight-card-target="card" >
+              <label class="flight-card  bg-white hover:bg-blue-50 p-4 border-2 border-transparent transition-all ease-in-out shadow-md rounded-md" data-flight-card-target="card" >
                 <%= form.radio_button :flight_id, flight.id, { required: 'required', class: 'hidden',  "data-flight-card-target": "radio" }  %>
                 <div class="flight-card-content  cursor-pointer" >
                   <div class="text-sm">
