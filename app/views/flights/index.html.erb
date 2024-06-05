@@ -35,7 +35,7 @@
         <%= form_with url: new_booking_path, class: "flex flex-col items-center" do |form| %>
           <div class="w-full grid  grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 mb-4"  data-controller="flight-card" >
             <% @flights.each do |flight| %>
-              <%= form.hidden_field :num_tickets, @flight_details[:num_tickets] %>
+              <%= form.hidden_field :num_tickets, value: @flight_details[:num_tickets] %>
               <label class="flight-card  bg-white hover:bg-blue-50 p-4 transition-all ease-in-out shadow-md rounded-md" data-flight-card-target="card" >
                 <%= form.radio_button :flight, flight.id, { required: 'required', class: 'hidden',  "data-flight-card-target": "radio" }  %>
                 <div class="flight-card-content  cursor-pointer" >
