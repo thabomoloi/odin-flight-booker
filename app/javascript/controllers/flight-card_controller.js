@@ -1,13 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
-const card_styels = ["border-2", "border-blue-600", "bg-blue-50"];
-const ariport_styles = ["text-blue-800"];
-const time_styles = ["text-blue-700"];
-
 export default class extends Controller {
   static targets = ["card", "radio", "airport", "time"];
-
-  prevouslySelectedIndex = -1;
 
   connect() {
     this.radioTargets.forEach((radioTarget) => {
@@ -17,17 +11,34 @@ export default class extends Controller {
 
   handleRadioChange(event) {
     // Clear background color from all cards
-
     this.cardTargets.forEach((cardTarget, index) => {
-      cardTarget.classList.remove(...card_styels);
-      this.airportTargets[index].classList.remove(...ariport_styles);
-      this.timeTargets[index].classList.remove(...time_styles);
+      cardTarget.classList.replace("bg-blue-50", "bg-white");
+      cardTarget.classList.replace("border-blue-500", "border-transparent");
+
+      this.airportTargets[index].classList.replace(
+        "text-blue-800",
+        "text-slate-800"
+      );
+      this.timeTargets[index].classList.replace(
+        "text-blue-700",
+        "text-slate-700"
+      );
     });
 
     // Add background color to the selected card
     const selectedIndex = this.radioTargets.indexOf(event.target);
-    this.cardTargets[selectedIndex].classList.add(...card_styels);
-    this.airportTargets[selectedIndex].classList.add(...ariport_styles);
-    this.timeTargets[selectedIndex].classList.add(...time_styles);
+    this.cardTargets[selectedIndex].classList.replace("bg-white", "bg-blue-50");
+    this.cardTargets[selectedIndex].classList.replace(
+      "border-transparent",
+      "border-blue-500"
+    );
+    this.airportTargets[selectedIndex].classList.replace(
+      "text-slate-800",
+      "text-blue-800"
+    );
+    this.timeTargets[selectedIndex].classList.replace(
+      "text-slate-700",
+      "text-blue-700"
+    );
   }
 }
