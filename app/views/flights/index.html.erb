@@ -32,12 +32,12 @@
       <% if @flights.empty? %>
         <p class="text-center">No flights found.</p>
       <% else %>
-        <%= form_with url: new_booking_path, class: "flex flex-col items-center" do |form| %>
+        <%= form_with url: new_booking_path, method: :get, class: "flex flex-col items-center" do |form| %>
+          <%= form.hidden_field :num_tickets, value: @flight_details[:num_tickets] %>
           <div class="w-full grid  grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 mb-4"  data-controller="flight-card" >
             <% @flights.each do |flight| %>
-              <%= form.hidden_field :num_tickets, value: @flight_details[:num_tickets] %>
               <label class="flight-card  bg-white hover:bg-blue-50 p-4 transition-all ease-in-out shadow-md rounded-md" data-flight-card-target="card" >
-                <%= form.radio_button :flight, flight.id, { required: 'required', class: 'hidden',  "data-flight-card-target": "radio" }  %>
+                <%= form.radio_button :flight_id, flight.id, { required: 'required', class: 'hidden',  "data-flight-card-target": "radio" }  %>
                 <div class="flight-card-content  cursor-pointer" >
                   <div class="text-sm">
                     <div class="flex justify-between gap-4 text-slate-800" data-flight-card-target="airport">
@@ -63,7 +63,7 @@
               </label>
             <% end %>
           </div>
-          <%= form.submit "Book", class: "bg-blue-800 w-full max-w-xs rounded p-2 text-sm font-medium text-blue-50 shadow" %>
+          <%= form.submit "Book", name: nil, class: "bg-blue-800 w-full max-w-xs rounded p-2 text-sm font-medium text-blue-50 shadow mb-4" %>
         <% end %>
       <% end %>
     </div>

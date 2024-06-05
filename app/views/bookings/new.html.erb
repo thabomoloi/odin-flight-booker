@@ -1,0 +1,48 @@
+<div class="flex justify-center -mt-48">
+  <div class="bg-white w-full max-w-lg p-6 shadow-md rounded-md">
+    <h1 class="mb-1 text-2xl font-bold text-slate-900 text-center">Flight Infomation</h1>
+    <p class="text-center mb-3 text-sm text-slate-700 font-semibold"><%= @flight.departure_time.strftime("%A, %d %B %Y") %></p>
+    <div class="text-sm">
+      <div class="flex justify-between gap-4 text-slate-800" data-flight-card-target="airport">
+        <div class="flex gap-2 font-bold items-center">
+          <%= inline_svg_tag "icons/airplane-takeoff.svg", class: "w-5 h-5 fill-current"%>
+          <span>Depart from <%= @flight.departure_airport.code %></span>
+        </div>
+        <div class="flex gap-2 font-bold items-center">
+          <%= inline_svg_tag "icons/airplane-landing.svg", class: "w-5 h-5 fill-current"%>
+          <span>Arrive to <%= @flight.arrival_airport.code %></span>
+        </div>
+      </div>
+      <div class="flex justify-between gap-4 mt-2 text-slate-700" data-flight-card-target="time">
+        <div class="flex gap-2 font-bold items-center">
+          <span><%= @flight.departure_time.strftime("%I:%M %p") %></span>
+        </div>
+        <div class="flex gap-2 font-bold items-center">
+          <span><%= format_duration2 @flight.duration %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-12 flex justify-center pb-6">
+  <div class="w-full max-w-lg">
+    <h2 class="text-lg font-bold text-slate-900 text-center mb-4">Passenger Information</h2>
+    <%= form_with model: @booking, class: "flex flex-col items-center gap-4" do |form| %>
+      <%= form.hidden_field :flight_id, value: @flight.id %>
+      <% @num_passengers.times do |index|%>
+        <div class="shadow-md w-full bg-white p-4 sm:p-6 rounded-md">
+          <h3 class="font-bold text-slate-800 mb-2">Passenger <%= index + 1 %></h3>
+          <div class="w-full text-sm">
+            <%= form.fields_for :passenger, @booking.passengers.build, index: index do |sub_form| %>
+              <%= sub_form.label :name,class: "mb-1 block font-semibold text-sm text-slate-700"%>
+              <%= sub_form.text_field :name, required: true, class: "mb-4 block w-full px-3 py-2 text-sm bg-slate-100 rounded border-slate-200", autofocus: true, autocomplete: "name" %>
+              <%= sub_form.label :email,class: "mb-1 block font-semibold text-sm text-slate-700"%>
+              <%= sub_form.email_field :email,requiredL: true, class: "block w-full px-3 py-2 text-sm bg-slate-100 rounded border-slate-200", autofocus: true, autocomplete: "email" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <%= form.submit "Book", class: "bg-blue-800 w-full max-w-xs rounded p-2 text-sm font-medium text-blue-50 shadow cursor-pointer shadow-md" %>
+    <% end %>
+  </div>
+</div>
