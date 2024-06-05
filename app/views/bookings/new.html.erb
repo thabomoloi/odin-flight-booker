@@ -33,7 +33,7 @@
         <div class="shadow-md w-full bg-white p-4 sm:p-6 rounded-md">
           <h3 class="font-bold text-slate-800 mb-2">Passenger <%= index + 1 %></h3>
           <div class="w-full text-sm">
-            <%= form.fields_for :passenger, @booking.passengers.build, index: index do |sub_form| %>
+            <%= form.fields_for :passengers, @booking.passengers.build do |sub_form| %>
               <%= sub_form.label :name,class: "mb-1 block font-semibold text-sm text-slate-700"%>
               <%= sub_form.text_field :name, required: true, class: "mb-4 block w-full px-3 py-2 text-sm bg-slate-100 rounded border-slate-200", autofocus: true, autocomplete: "name" %>
               <%= sub_form.label :email,class: "mb-1 block font-semibold text-sm text-slate-700"%>
