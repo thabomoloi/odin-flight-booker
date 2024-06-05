@@ -16,7 +16,7 @@
           <%= form.select(:date, @unique_departure_dates, {selected: @flight_details[:date], include_blank: "Depature date"}, {class: "form-select"}) %>
         </div>
         <div class="relative">
-          <%= inline_svg_tag "icons/calendar-today.svg", class: "select-svg" %>
+          <%= inline_svg_tag "icons/account.svg", class: "select-svg" %>
           <%= form.select(:num_tickets, [1,2,3,4], {selected: @flight_details[:num_tickets], include_blank: "Passengers"}, {class: "form-select"})%>
         </div>
         <%= form.submit "Search", name: nil, class: "w-full bg-blue-800 rounded p-2 text-sm font-medium text-blue-50 shadow" %>
