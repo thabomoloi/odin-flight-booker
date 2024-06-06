@@ -3,11 +3,40 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <style>
-      /* Email styles need to be inline */
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .header, .footer {
+        text-align: center;
+        background-color: #f2f2f2;
+        padding: 10px 0;
+      }
+      .content {
+        margin: 20px 0;
+      }
+      .details {
+        margin: 10px 0;
+      }
     </style>
   </head>
-
   <body>
-    <%= yield %>
+    <div class="container">
+      <div class="header">
+        <h1>Odin Airways</h1>
+      </div>
+      <div class="content">
+        <%= yield %>
+      </div>
+      <div class="footer">
+        <p>&copy; <%= Date.today.year %> Odin Airways. All rights reserved.</p>
+      </div>
+    </div>
   </body>
 </html>
