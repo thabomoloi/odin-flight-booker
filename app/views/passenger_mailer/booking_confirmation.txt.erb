@@ -1,0 +1,25 @@
+Dear <%= @passenger.name %>,
+
+Thank you for choosing to fly with us! We are pleased to confirm your booking for the following flight:
+
+Flight Details:
+Flight Number: <%= @flight.id %>
+Departure Airport: <%= @flight.departure_airport.code %>
+Arrival Airport: <%= @flight.arrival_airport.code %>
+Departure Date and Time: <%= @flight.departure_time.strftime('%A, %d %B %Y %H:%M %p') %>
+Arrival Date and Time: <%= (@flight.departure_time + @flight.duration.minutes).strftime('%A, %d %B %Y %H:%M %p') %>
+
+Passenger Details:
+Name: <%= @passenger.name %>
+Email: <%= @passenger.email %>
+Booking Number: <%= @booking.id %>
+
+Please ensure that you arrive at the airport at least 2 hours prior to the departure time for check-in and security clearance.
+
+If you have any questions or need further assistance, please do not hesitate to contact our customer support.
+
+We look forward to welcoming you on board!
+
+Best regards,
+Odin Airways
+Customer Support
