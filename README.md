@@ -20,3 +20,12 @@ This is part of the Forms Project in The Odin Project’s Ruby on Rails Curricul
 ### Booking Information
 
 ![Booking information](./public/screenshots/flight_search_booking_info.png)
+
+### Passenger Mailer
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+<img alt="Passenge email 1" src="./public/screenshots/flight_search_email1.png"/>
+<img alt="Passenge email 2" src="./public/screenshots/flight_search_email2.png"/>
+<img alt="Passenge email 3" src="./public/screenshots/flight_search_email3.png"/>
+<img alt="Passenge email 4" src="./public/screenshots/flight_search_email4.png"/>
+</div>
